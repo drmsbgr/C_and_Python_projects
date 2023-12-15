@@ -15,8 +15,8 @@ int EnBuyukDegeriBul(int *diziPTR, int boyut)
 
 int main()
 {
-    int dizi[6] = {5, 99, 100, 23, 320, 15};
-    int bd = EnBuyukDegeriBul(dizi, 6);
+    int dizi[] = {5, 99, 100, 23, 320, 15};
+    int bd = EnBuyukDegeriBul(dizi, sizeof(dizi) / sizeof(int));
     printf("En buyuk deger: %d", bd);
     return 0;
 }
