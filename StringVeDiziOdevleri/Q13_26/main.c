@@ -125,7 +125,7 @@ int IndisBul(int *dizi, int boyut, int hedef)
     }
 }
 
-int TekrarlariBul(int *dizi, int boyut)
+void TekrarlariBul(int *dizi, int boyut)
 {
     int okunanlar[boyut];
     int adetler[boyut];
