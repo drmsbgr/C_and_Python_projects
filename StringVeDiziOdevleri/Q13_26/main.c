@@ -125,75 +125,54 @@ int IndisBul(int *dizi, int boyut, int hedef)
     }
 }
 
+int TekrarSayisiHesapla(int *dizi, int boyut, int hedef)
+{
+    int sayac = 0;
+    for (int i = 0; i < boyut; i++)
+    {
+        if (dizi[i] == hedef)
+            sayac++;
+    }
+
+    return sayac;
+}
+
 void TekrarlariBul(int *dizi, int boyut)
 {
     int okunanlar[boyut];
-    int adetler[boyut];
     for (int i = 0; i < boyut; i++)
-    {
-        okunanlar[i] = 999;
-        adetler[i] = 1;
-    }
+        okunanlar[i] = 0;
 
     int k = 0;
+
     for (int i = 0; i < boyut; i++)
     {
-        for (int j = i; j < boyut; j++)
+        if (ElemanVarMi(okunanlar, boyut, dizi[i]) == -1)
         {
-            if (i == j)
-                continue;
-
-            if (dizi[i] == dizi[j])
-            {
-                if (ElemanVarMi(okunanlar, boyut, dizi[i]) == -1)
-                {
-                    okunanlar[k] = dizi[i];
-                    adetler[k]++;
-                    k++;
-                }
-                else
-                {
-                    int m = IndisBul(okunanlar, boyut, dizi[i]);
-                    adetler[m]++;
-                }
-            }
+            okunanlar[k] = dizi[i];
+            printf("%d, %d kez tekrar etti\n", dizi[i], TekrarSayisiHesapla(dizi, boyut, dizi[i]));
         }
-    }
-
-    for (int i = 0; i < k; i++)
-    {
-        for (int j = 0; j < adetler[i]; j++)
-            printf("%d ", okunanlar[i]);
-
-        printf("\n");
     }
 }
 
 void TekrarlardanYeniDizi(int *dizi, int boyut)
 {
-    int tekrarEdenElemanSayisi = 0;
     int okunanlar[boyut];
-
     for (int i = 0; i < boyut; i++)
-        okunanlar[i] = 999;
+        okunanlar[i] = 0;
+
+    int k = 0;
 
     for (int i = 0; i < boyut; i++)
     {
-        for (int j = i; j < boyut; j++)
+        if (ElemanVarMi(okunanlar, boyut, dizi[i]) == -1 && TekrarSayisiHesapla(dizi, boyut, dizi[i]) > 1)
         {
-            if (i == j)
-                continue;
-
-            if (dizi[i] == dizi[j] && ElemanVarMi(okunanlar, boyut, dizi[i]) != -1)
-            {
-                okunanlar[tekrarEdenElemanSayisi] = dizi[i];
-                tekrarEdenElemanSayisi++;
-            }
+            okunanlar[k] = dizi[i];
+            k++;
         }
     }
-
     printf("Tekrar etmis olan sayilardan olusan yeni dizi\n");
-    DiziYazdir(okunanlar, tekrarEdenElemanSayisi);
+    DiziYazdir(okunanlar, k);
 }
 
 int IkiDiziTopla(int *dizi1, int *dizi2, int boyut)
@@ -206,7 +185,10 @@ void DiziYazdir(int *dizi, int boyut)
     printf("{");
 
     for (int i = 0; i < boyut; i++)
-        printf("%d ", dizi[i]);
+        if (i == boyut - 1)
+            printf("%d", dizi[i]);
+        else
+            printf("%d, ", dizi[i]);
 
     printf("}");
 }
